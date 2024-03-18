@@ -1,0 +1,202 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: May 18, 2023 at 05:58 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `scholarshipsystem`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `application_table`
+--
+
+CREATE TABLE `application_table` (
+  `application_id` int(50) NOT NULL,
+  `student_id` int(50) NOT NULL,
+  `scholarship_id` int(50) NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `application_table`
+--
+
+INSERT INTO `application_table` (`application_id`, `student_id`, `scholarship_id`, `status`) VALUES
+(6, 40, 23, 'pending'),
+(8, 42, 25, 'Pending'),
+(9, 43, 26, 'Pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `table_scholarship`
+--
+
+CREATE TABLE `table_scholarship` (
+  `scholarship_id` int(50) NOT NULL,
+  `scholarship_name` varchar(20) NOT NULL,
+  `scholarship_type` varchar(50) NOT NULL,
+  `scholarship_descrip` longtext NOT NULL,
+  `scholarship_status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `table_scholarship`
+--
+
+INSERT INTO `table_scholarship` (`scholarship_id`, `scholarship_name`, `scholarship_type`, `scholarship_descrip`, `scholarship_status`) VALUES
+(23, 'UNIFAST', 'Academic', 'wewewewew', 'Approved	'),
+(25, 'rt', 'rt', 'rt', 'Pending'),
+(26, 'ju', 'ju', 'ju', 'Declined');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `table_student`
+--
+
+CREATE TABLE `table_student` (
+  `student_id` int(20) NOT NULL,
+  `student_fname` varchar(50) NOT NULL,
+  `student_lname` varchar(50) NOT NULL,
+  `student_course` varchar(20) NOT NULL,
+  `student_contactnum` varchar(15) NOT NULL,
+  `student_gender` varchar(50) NOT NULL,
+  `image` varchar(600) NOT NULL,
+  `student_status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `table_student`
+--
+
+INSERT INTO `table_student` (`student_id`, `student_fname`, `student_lname`, `student_course`, `student_contactnum`, `student_gender`, `image`, `student_status`) VALUES
+(40, 'jan', 'oyy', 'bshm', '345', 'F', '', 'SINGLE'),
+(42, 'we', 'we', 'we', 'we', 'Male', '', 'Married	'),
+(43, 'qt', 'qt', 'qt', 'qt', 'Male', '', 'Single '),
+(48, 'tre', 're', 'wer', '234', 'Male', '????XICC_PROFILE\0\0\0HLino\0\0mntrRGB XYZ ?\0\0	\0\01\0\0acspMSFT\0\0\0\0IEC sRGB\0\0\0\0\0\0\0\0\0\0\0\0\0\0??\0\0\0\0\0?-HP  \0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0cprt\0\0P\0\0\03desc\0\0?\0\0\0lwtpt\0\0?\0\0\0bkpt\0\0\0\0\0rXYZ\0\0\0\0\0gXYZ\0\0,\0\0\0bXYZ\0\0@\0\0\0dmnd\0\0T\0\0\0pdmdd\0\0?\0\0\0?vued\0\0L\0\0\0?view\0\0?\0\0\0$lumi\0\0?\0\0\0meas\0\0\0\0\0$tech\0\00\0\0\0rTRC\0\0<\0\0gTRC\0\0<\0\0bTRC\0\0<\0\0text\0\0\0\0Copyright (c) 1998 Hewlett-Packard Company\0\0desc\0\0\0\0\0\0\0sRGB IEC61966-2.1\0\0\0\0\0\0\0\0\0\0\0sRGB IEC61966-2.1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0XYZ \0\0\0\0\0\0?Q\0\0\0\0?XYZ \0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0XYZ \0\0\0\0\0\0o?\0\08?\0\0?XYZ \0\0\0\0\0\0b?\0\0??\0\0?XYZ ', 'Single '),
+(49, 'we', 'we', 'we', 'we', 'Male', 'C:\\Users\\Harfeil Salmeron\\Pictures\\business_people_meeting_office_work_corporate_job_male-1079382.jpg!d', 'Single	'),
+(50, 'yer', 'e', 'bes', '34', 'Male', 'C:\\Users\\Harfeil Salmeron\\Pictures\\35af6a41332353.57a1ce913e889.jpg', 'Single	'),
+(51, 'tu', 'tu', 'yu', '345', 'Male', 'C:\\Users\\Harfeil Salmeron\\Pictures\\business_people_meeting_office_work_corporate_job_male-1079382.jpg!d', 'Single	');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_table`
+--
+
+CREATE TABLE `user_table` (
+  `user_id` int(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `contact` varchar(50) NOT NULL,
+  `image` varchar(600) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `role` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_table`
+--
+
+INSERT INTO `user_table` (`user_id`, `username`, `email`, `contact`, `image`, `password`, `role`) VALUES
+(30, 'rey', '@ret', '123', '????XICC_PROFILE\0\0\0HLino\0\0mntrRGB XYZ ?\0\0	\0\01\0\0acspMSFT\0\0\0\0IEC sRGB\0\0\0\0\0\0\0\0\0\0\0\0\0\0??\0\0\0\0\0?-HP  \0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0cprt\0\0P\0\0\03desc\0\0?\0\0\0lwtpt\0\0?\0\0\0bkpt\0\0\0\0\0rXYZ\0\0\0\0\0gXYZ\0\0,\0\0\0bXYZ\0\0@\0\0\0dmnd\0\0T\0\0\0pdmdd\0\0?\0\0\0?vued\0\0L\0\0\0?view\0\0?\0\0\0$lumi\0\0?\0\0\0meas\0\0\0\0\0$tech\0\00\0\0\0rTRC\0\0<\0\0gTRC\0\0<\0\0bTRC\0\0<\0\0text\0\0\0\0Copyright (c) 1998 Hewlett-Packard Company\0\0desc\0\0\0\0\0\0\0sRGB IEC61966-2.1\0\0\0\0\0\0\0\0\0\0\0sRGB IEC61966-2.1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0XYZ \0\0\0\0\0\0?Q\0\0\0\0?XYZ \0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0XYZ \0\0\0\0\0\0o?\0\08?\0\0?XYZ \0\0\0\0\0\0b?\0\0??\0\0?XYZ ', '$2a$10$QboSK2MxStHYKxkWEwmuTOWZR7jTa1X6hunvIqwG6QCgUi2XvUsIG', 'admin'),
+(31, 'we', '@we', '123342', '????XICC_PROFILE\0\0\0HLino\0\0mntrRGB XYZ ?\0\0	\0\01\0\0acspMSFT\0\0\0\0IEC sRGB\0\0\0\0\0\0\0\0\0\0\0\0\0\0??\0\0\0\0\0?-HP  \0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0cprt\0\0P\0\0\03desc\0\0?\0\0\0lwtpt\0\0?\0\0\0bkpt\0\0\0\0\0rXYZ\0\0\0\0\0gXYZ\0\0,\0\0\0bXYZ\0\0@\0\0\0dmnd\0\0T\0\0\0pdmdd\0\0?\0\0\0?vued\0\0L\0\0\0?view\0\0?\0\0\0$lumi\0\0?\0\0\0meas\0\0\0\0\0$tech\0\00\0\0\0rTRC\0\0<\0\0gTRC\0\0<\0\0bTRC\0\0<\0\0text\0\0\0\0Copyright (c) 1998 Hewlett-Packard Company\0\0desc\0\0\0\0\0\0\0sRGB IEC61966-2.1\0\0\0\0\0\0\0\0\0\0\0sRGB IEC61966-2.1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0XYZ \0\0\0\0\0\0?Q\0\0\0\0?XYZ \0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0XYZ \0\0\0\0\0\0o?\0\08?\0\0?XYZ \0\0\0\0\0\0b?\0\0??\0\0?XYZ ', '$2a$10$t.VM1xhdYkCHG4k2pt.TmeffmcmXvzb8Zm.OtsA61uX9sk1KaVQMS', 'admin'),
+(34, 'w', '@w', '234', 'C:\\\\Users\\\\Harfeil Salmeron\\\\Pictures\\\\35af6a41332353.57a1ce913e889.jpg', '$2a$10$Iv3j9/2tb3jvc3ZfXJAmeufrPMcN0Z6CIY2viDRZagZNoGk0Dn1te', 'admin'),
+(35, 'har', '@har', '124', 'C:\\\\Users\\\\Harfeil Salmeron\\\\Pictures\\\\business_people_meeting_office_work_corporate_job_male-1079382.jpg!d', '$2a$10$oYSd/uegQ3VqnpWnwRyJUOInW3ICcCSuXUEwyQ6lAOrxyV6cV5vwK', 'admin'),
+(36, 'hr', '@he', '23425', 'C:\\\\Users\\\\Harfeil Salmeron\\\\Pictures\\\\35af6a41332353.57a1ce913e889.jpg', '$2a$10$W/nC4a.9p1ruUx3Bd93ZH.Vx63GVUZ5L2SM9B.ItD0mNvnuh2dx2e', 'admin'),
+(37, 'uy', '@uy', '25345', 'C:\\\\Users\\\\Harfeil Salmeron\\\\Pictures\\\\35af6a41332353.57a1ce913e889.jpg', '$2a$10$8T88NP2/oVIraKL3k2.qWeBQv0t6d6lopy5IUpFbr0/fgfjR.WngG', 'admin'),
+(38, 'huy', '@o', '576', 'C:\\\\Users\\\\Harfeil Salmeron\\\\Pictures\\\\business_people_meeting_office_work_corporate_job_male-1079382.jpg!d', '$2a$10$5vbWtrosYTUtPOL0oFl6mewT3L.3Gwrpk1IVfxN1crR6B32.1rlMe', 'admin'),
+(39, 'yt', '@t', '345', 'C:\\\\Users\\\\Harfeil Salmeron\\\\Pictures\\\\35af6a41332353.57a1ce913e889.jpg', '$2a$10$NOpGcVp5JXwd7m0qpp/pXegyQ6mBGd6wCfbHjUeK/9Pin9gdwaCMS', 'admin'),
+(40, 'rey', '@rel', '12335345', 'C:\\\\Users\\\\Harfeil Salmeron\\\\Pictures\\\\business_people_meeting_office_work_corporate_job_male-1079382.jpg!d', '$2a$10$btCJHLxIJFPDDwPZJUrw6u2MzGl5oNZKFFTnPTnPIj82tlqoeMtK6', 'admin');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `application_table`
+--
+ALTER TABLE `application_table`
+  ADD PRIMARY KEY (`application_id`),
+  ADD UNIQUE KEY `student_id` (`student_id`),
+  ADD UNIQUE KEY `scholarship_id` (`scholarship_id`);
+
+--
+-- Indexes for table `table_scholarship`
+--
+ALTER TABLE `table_scholarship`
+  ADD PRIMARY KEY (`scholarship_id`);
+
+--
+-- Indexes for table `table_student`
+--
+ALTER TABLE `table_student`
+  ADD PRIMARY KEY (`student_id`);
+
+--
+-- Indexes for table `user_table`
+--
+ALTER TABLE `user_table`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `application_table`
+--
+ALTER TABLE `application_table`
+  MODIFY `application_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `table_scholarship`
+--
+ALTER TABLE `table_scholarship`
+  MODIFY `scholarship_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `table_student`
+--
+ALTER TABLE `table_student`
+  MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+
+--
+-- AUTO_INCREMENT for table `user_table`
+--
+ALTER TABLE `user_table`
+  MODIFY `user_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `application_table`
+--
+ALTER TABLE `application_table`
+  ADD CONSTRAINT `application_table_ibfk_1` FOREIGN KEY (`scholarship_id`) REFERENCES `table_scholarship` (`scholarship_id`),
+  ADD CONSTRAINT `application_table_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `table_student` (`student_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
