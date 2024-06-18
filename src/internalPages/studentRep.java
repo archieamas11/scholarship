@@ -83,7 +83,7 @@ public class studentRep extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(rep);
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(40, 122, 560, 380);
+        jScrollPane2.setBounds(20, 120, 570, 380);
 
         inf.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         inf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-print-30.png"))); // NOI18N

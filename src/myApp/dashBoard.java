@@ -64,10 +64,8 @@ public class dashBoard extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         mainDesktop = new javax.swing.JDesktopPane();
         jPanel3 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         Date = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
 
         jLabel7.setText("jLabel7");
 
@@ -109,7 +107,7 @@ public class dashBoard extends javax.swing.JFrame {
         header.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 0, 30, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/uni.PNG"))); // NOI18N
-        header.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 650, 110));
+        header.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 110));
 
         jPanel1.add(header);
         header.setBounds(220, 0, 630, 110);
@@ -179,11 +177,6 @@ public class dashBoard extends javax.swing.JFrame {
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel10.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel10.setText("WELCOME ");
-        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 50));
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("DATE:");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 80, 40));
@@ -191,16 +184,13 @@ public class dashBoard extends javax.swing.JFrame {
         Date.setEditable(false);
         jPanel3.add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 110, -1));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/aa.jpg"))); // NOI18N
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 520, 490));
-
         mainDesktop.setLayer(jPanel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout mainDesktopLayout = new javax.swing.GroupLayout(mainDesktop);
         mainDesktop.setLayout(mainDesktopLayout);
         mainDesktopLayout.setHorizontalGroup(
             mainDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 630, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
         );
         mainDesktopLayout.setVerticalGroup(
             mainDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,8 +260,6 @@ public class dashBoard extends javax.swing.JFrame {
             mainDesktop.add(db).setVisible(true);
             db.ads = nam;
             db.name = name;
-             System.out.println("Role: " + nam);
-            
         } else {
             JOptionPane.showMessageDialog(null, "you can't Access THIS!!!");
 
@@ -279,11 +267,9 @@ public class dashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-
         studentRep db = new studentRep();
         mainDesktop.add(db).setVisible(true);
-        db.ad= nam;
-
+        db.ad = nam;
     }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
@@ -326,13 +312,11 @@ public class dashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel dashPane;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
