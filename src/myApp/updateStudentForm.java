@@ -6,7 +6,7 @@
 package myApp;
 
 import config.dbconnector;
-import internalPages.admin;
+import admin.adminDashboard;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -283,7 +283,7 @@ public class updateStudentForm extends javax.swing.JFrame {
 
     private void jLabel34MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel34MouseClicked
 
-        admin db = new admin();
+        adminDashboard db = new adminDashboard();
         db.setVisible(true);
         this.hide();
         db.ads = ads;
@@ -341,7 +341,7 @@ public class updateStudentForm extends javax.swing.JFrame {
             }
 
             JOptionPane.showMessageDialog(null, "Updated Successfully!");
-            studentPage db = new studentPage();
+            adminDashboard db = new adminDashboard();
             db.setVisible(true);
             this.hide();
             db.ad = ads;

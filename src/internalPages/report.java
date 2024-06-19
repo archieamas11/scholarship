@@ -26,7 +26,7 @@ import javax.swing.table.TableRowSorter;
 import myApp.applicationForm;
 import myApp.dashBoard;
 import myApp.editReports;
-import myApp.logBoard;
+import myApp.login;
 import myApp.printAppForm;
 import myApp.updateScholarForm;
 import net.proteanit.sql.DbUtils;

@@ -5,7 +5,7 @@
  */
 package myApp;
 
-import internalPages.admin;
+import admin.adminDashboard;
 import java.awt.Image;
 import java.io.File;
 import java.nio.file.Files;
@@ -252,7 +252,7 @@ public class addStudentForm extends javax.swing.JFrame {
     }
     private void jLabel34MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel34MouseClicked
 
-        admin db = new admin();
+        adminDashboard db = new adminDashboard();
         db.setVisible(true);
         this.hide();
         db.ads = ads;
@@ -300,7 +300,7 @@ public class addStudentForm extends javax.swing.JFrame {
                     byte[] buf = new byte[1024];
                     System.out.println("" + reference);
                     ins.setVisible(true);
-                    
+
                 }
             } catch (Exception ex) {
                 System.out.println("File Error!");
@@ -325,7 +325,7 @@ public class addStudentForm extends javax.swing.JFrame {
             pst.setString(7, status.getSelectedItem().toString());
 
             pst.execute();
-            studentPage db = new studentPage();
+            adminDashboard db = new adminDashboard();
             db.setVisible(true);
 //            this.hide();
             db.ad = ads;
@@ -338,7 +338,7 @@ public class addStudentForm extends javax.swing.JFrame {
         }
         if (result == 1) {
             JOptionPane.showMessageDialog(null, "Successfully Save!");
-            studentPage sp = new studentPage();
+            adminDashboard sp = new adminDashboard();
             sp.uname = name;
             sp.ad = ads;
         } else {

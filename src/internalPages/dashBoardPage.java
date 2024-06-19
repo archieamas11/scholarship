@@ -5,6 +5,7 @@
  */
 package internalPages;
 
+import admin.adminDashboard;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.Image;
@@ -18,8 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import myApp.logBoard;
-import static myApp.studentPage.images;
+import login.login;
+import myApp.login;
 import myApp.userPage;
 
 /**
@@ -163,7 +164,7 @@ public class dashBoardPage extends javax.swing.JInternalFrame {
         dash1.add(userInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 130, 100));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sw.png"))); // NOI18N
-        dash1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 610));
+        dash1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 630, 610));
 
         boardPage6.add(dash1);
         dash1.setBounds(0, 0, 630, 610);
@@ -209,8 +210,8 @@ public class dashBoardPage extends javax.swing.JInternalFrame {
 
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
 
-        logBoard lb = new logBoard();
-        admin ad = new admin();
+        login lb = new login();
+        adminDashboard ad = new adminDashboard();
         String email = lb.email;
         Connection conn = null;
         String newImage = null;

@@ -19,27 +19,18 @@ import java.sql.SQLException;
 public class dbconnector {
 
     public Connection connection;
-
-    public static Connection mycon() {
-        Connection con = null;
-
-        try {
-            Class.forName("con.mysql.jdbc.driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/scholarshipsystem", "root", "");
-        } catch (ClassNotFoundException | SQLException e) {
-        }
-
-        return con;
-    }
+    public PreparedStatement pst;
 
     public dbconnector() {
-
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/scholarshipsystem", "root", "");
         } catch (SQLException e) {
-            System.err.println("Cannot connect to database: " + e.getMessage());
+            System.out.println("Cannot connect to database: " + e.getMessage());
         }
+    }
 
+    public Connection getConnection() {
+        return connection;
     }
 
     public ResultSet getData(String sql) throws SQLException {
@@ -148,7 +139,8 @@ public class dbconnector {
             System.out.println("Error deleting data: " + e.getMessage());
         }
     }
-     public void deleteReport(int id) {
+
+    public void deleteReport(int id) {
         try {
 
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement("DELETE FROM table_scholarship WHERE application_id = ?");

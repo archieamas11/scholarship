@@ -6,7 +6,7 @@
 package myApp;
 
 import config.dbconnector;
-import internalPages.admin;
+import admin.adminDashboard;
 import javax.swing.JOptionPane;
 
 /**
@@ -168,7 +168,7 @@ public class updateScholarForm extends javax.swing.JFrame {
 
     private void jLabel34MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel34MouseClicked
 
-        admin db = new admin();
+        adminDashboard db = new adminDashboard();
         db.setVisible(true);
         this.hide();
         db.ads = ads ;
