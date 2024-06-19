@@ -28,7 +28,7 @@ import myApp.dashBoard;
 import myApp.editReports;
 import myApp.login;
 import myApp.printAppForm;
-import myApp.updateScholarForm;
+import admin.updateScholarForm;
 import net.proteanit.sql.DbUtils;
 
 /**

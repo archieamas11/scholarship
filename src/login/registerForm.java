@@ -7,7 +7,6 @@ package login;
 
 import com.mysql.jdbc.PreparedStatement;
 
-import config.dbconnector;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -110,7 +109,7 @@ public class registerForm extends javax.swing.JFrame {
         });
         jPanel1.add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 510, 370, 40));
 
-        submit.setBackground(new java.awt.Color(255, 102, 102));
+        submit.setBackground(new java.awt.Color(221, 68, 112));
         submit.setForeground(new java.awt.Color(255, 255, 255));
         submit.setText("Sign up");
         submit.setBorderPainted(false);
@@ -202,7 +201,6 @@ public class registerForm extends javax.swing.JFrame {
     File selectedFile;
     String fileName;
     String imagePath;
-    String role = null;
 
     private void insActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insActionPerformed
         JFileChooser fileChooser = new JFileChooser();

@@ -6,20 +6,15 @@
 package admin;
 
 import config.dbconnector;
-import java.awt.Image;
-import java.sql.Connection;
+import config.save;
+import config.saveImage;
+import config.searchtable;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-import myApp.addScholarForm;
-import myApp.addStudentForm;
 import login.login;
-import myApp.updateScholarForm;
-import myApp.updateStudentForm;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -31,16 +26,39 @@ public class adminDashboard extends javax.swing.JFrame {
     /**
      * Creates new form adminDashboard
      */
-    public byte[] imageBytes;
-
-    public static String reference;
-    public String uname = "";
-    public String ads = "";
+    int admin_id = save.getID();
 
     public adminDashboard() {
         initComponents();
         displayData();
         scholarShip();
+        displayProfile();
+        b1.setSelected(true);
+        b2.setSelected(false);
+        b3.setSelected(false);
+    }
+
+    public void displayProfile() {
+        try {
+            dbconnector dbc = new dbconnector();
+            String sql = "SELECT * FROM user_table WHERE user_id=?";
+            PreparedStatement preparedStatement = dbc.getConnection().prepareStatement(sql);
+            preparedStatement.setInt(1, admin_id);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                String image_path = rs.getString("image");
+                int height = 150;
+                int width = 150;
+                saveImage.displayImage(image, image_path, height, width);
+                user_id.setText(rs.getString("user_id"));
+                username1.setText(rs.getString("username"));
+                email.setText(rs.getString("email"));
+                contact.setText(rs.getString("contact"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error Message: " + ex);
+        }
     }
 
     public void scholarShip() {
@@ -53,19 +71,6 @@ public class adminDashboard extends javax.swing.JFrame {
         } catch (SQLException ex) {
             System.out.println("Error Message" + ex);
         }
-    }
-
-    public ImageIcon ResizeImage(String ImagePath, byte[] pic) {
-        ImageIcon MyImage = null;
-        if (ImagePath != null) {
-            MyImage = new ImageIcon(ImagePath);
-        } else {
-            MyImage = new ImageIcon(pic);
-        }
-        Image img = MyImage.getImage();
-        Image newImg = img.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-        ImageIcon image = new ImageIcon(newImg);
-        return image;
     }
 
     public void displayData() {
@@ -95,39 +100,38 @@ public class adminDashboard extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jToggleButton5 = new javax.swing.JToggleButton();
-        jToggleButton6 = new javax.swing.JToggleButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        b1 = new javax.swing.JToggleButton();
+        b2 = new javax.swing.JToggleButton();
+        b3 = new javax.swing.JToggleButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         tabs = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
-        acc = new javax.swing.JLabel();
-        email1 = new javax.swing.JLabel();
-        position = new javax.swing.JLabel();
-        num = new javax.swing.JTextField();
-        user = new javax.swing.JTextField();
-        studentId = new javax.swing.JTextField();
-        jPanel15 = new javax.swing.JPanel();
+        user_id = new javax.swing.JTextField();
+        contact = new javax.swing.JTextField();
+        username1 = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
         image = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         student_table = new javax.swing.JTable();
         jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
+        edut = new javax.swing.JToggleButton();
         jToggleButton4 = new javax.swing.JToggleButton();
         search = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         scholarship_table = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
+        edit = new javax.swing.JButton();
+        add = new javax.swing.JButton();
         search1 = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -156,29 +160,29 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel1.setText("ADMIN PAGE");
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 240, 50));
 
-        jToggleButton5.setText("Profile");
-        jToggleButton5.addActionListener(new java.awt.event.ActionListener() {
+        b1.setText("Profile");
+        b1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton5ActionPerformed(evt);
+                b1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jToggleButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 180, 40));
+        jPanel3.add(b1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 180, 40));
 
-        jToggleButton6.setText("Manage student");
-        jToggleButton6.addActionListener(new java.awt.event.ActionListener() {
+        b2.setText("Manage students");
+        b2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton6ActionPerformed(evt);
+                b2ActionPerformed(evt);
             }
         });
-        jPanel3.add(jToggleButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 180, 40));
+        jPanel3.add(b2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 180, 40));
 
-        jToggleButton1.setText("Manage scholarship");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        b3.setText("Manage scholarship");
+        b3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                b3ActionPerformed(evt);
             }
         });
-        jPanel3.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 180, 40));
+        jPanel3.add(b3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 180, 40));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 700));
 
@@ -187,72 +191,30 @@ public class adminDashboard extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/books_icon.png"))); // NOI18N
-        jLabel2.setText(" Scholarship Explorer");
-        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 50));
+        jLabel2.setText(" Scholarship Tracker");
+        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 290, 50));
 
-        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 0, 450, 50));
+        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 760, 40));
 
         tabs.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        acc.setBackground(new java.awt.Color(255, 255, 255));
-        acc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        acc.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        acc.setText("Account ID");
-        jPanel4.add(acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 110, 30));
+        user_id.setEditable(false);
+        user_id.setBackground(new java.awt.Color(255, 255, 255));
+        user_id.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Admin ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel4.add(user_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 270, 50));
 
-        email1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        email1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        email1.setText("Username");
-        jPanel4.add(email1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 80, 30));
+        contact.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contact number", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel4.add(contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, 270, 50));
 
-        position.setBackground(new java.awt.Color(255, 255, 255));
-        position.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        position.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        position.setText("Contact");
-        jPanel4.add(position, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 50, 30));
+        username1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Username", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel4.add(username1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, 270, 50));
 
-        num.setEditable(false);
-        num.setBackground(new java.awt.Color(255, 255, 255));
-        num.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel4.add(num, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 180, 30));
-
-        user.setEditable(false);
-        user.setBackground(new java.awt.Color(255, 255, 255));
-        user.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel4.add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 180, 30));
-
-        studentId.setEditable(false);
-        studentId.setBackground(new java.awt.Color(255, 255, 255));
-        studentId.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel4.add(studentId, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 180, 30));
-
-        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
-
-        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/uuser.png"))); // NOI18N
-        image.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                imageMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(image, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-        );
-
-        jPanel4.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 80, 140, -1));
+        email.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Email", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel4.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 400, 270, 50));
+        jPanel4.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 150, 150));
 
         tabs.addTab("profile", jPanel4);
 
@@ -284,13 +246,13 @@ public class adminDashboard extends javax.swing.JFrame {
         });
         jPanel5.add(jToggleButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, 100, 30));
 
-        jToggleButton3.setText("Edit");
-        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+        edut.setText("Edit");
+        edut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton3ActionPerformed(evt);
+                edutActionPerformed(evt);
             }
         });
-        jPanel5.add(jToggleButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 100, 30));
+        jPanel5.add(edut, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 100, 30));
 
         jToggleButton4.setText("Delete");
         jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -302,9 +264,15 @@ public class adminDashboard extends javax.swing.JFrame {
 
         search.setForeground(new java.awt.Color(153, 153, 153));
         search.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchKeyReleased(evt);
+            }
+        });
         jPanel5.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 180, 30));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-search-25.png"))); // NOI18N
+        jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -314,6 +282,9 @@ public class adminDashboard extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/t_1.png"))); // NOI18N
         jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/scc.png"))); // NOI18N
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, 100));
 
         tabs.addTab("manage student", jPanel5);
 
@@ -337,35 +308,41 @@ public class adminDashboard extends javax.swing.JFrame {
 
         jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 700, 460));
 
-        jButton5.setText("Delete");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                deleteActionPerformed(evt);
             }
         });
-        jPanel6.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 100, 30));
+        jPanel6.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 100, 30));
 
-        jButton1.setText("Edit");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        edit.setText("Edit");
+        edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                editActionPerformed(evt);
             }
         });
-        jPanel6.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 100, 30));
+        jPanel6.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 100, 30));
 
-        jButton2.setText("Add");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        add.setText("Add");
+        add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                addActionPerformed(evt);
             }
         });
-        jPanel6.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, 100, 30));
+        jPanel6.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, 100, 30));
 
         search1.setForeground(new java.awt.Color(153, 153, 153));
         search1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        search1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                search1KeyReleased(evt);
+            }
+        });
         jPanel6.add(search1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 180, 30));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-search-25.png"))); // NOI18N
+        jButton6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -373,8 +350,11 @@ public class adminDashboard extends javax.swing.JFrame {
         });
         jPanel6.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 40, 30));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/t_1.png"))); // NOI18N
-        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/scc.png"))); // NOI18N
+        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, -1));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/t_1.png"))); // NOI18N
+        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         tabs.addTab("manage scholarship", jPanel6);
 
@@ -397,36 +377,36 @@ public class adminDashboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void imageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageMouseClicked
-    }//GEN-LAST:event_imageMouseClicked
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-//        JFrame mainJFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-//        mainJFrame.dispose();
         login lb = new login();
         lb.setVisible(true);
-        this.hide();
+        this.dispose();
+        save.logout();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
+    private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
         tabs.setSelectedIndex(0);
-    }//GEN-LAST:event_jToggleButton5ActionPerformed
+        b1.setSelected(true);
+        b2.setSelected(false);
+        b3.setSelected(false);
+    }//GEN-LAST:event_b1ActionPerformed
 
-    private void jToggleButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton6ActionPerformed
+    private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
         tabs.setSelectedIndex(1);
-    }//GEN-LAST:event_jToggleButton6ActionPerformed
+        b1.setSelected(false);
+        b2.setSelected(true);
+        b3.setSelected(false);
+    }//GEN-LAST:event_b2ActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+    private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
         tabs.setSelectedIndex(2);
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+        b1.setSelected(false);
+        b2.setSelected(false);
+        b3.setSelected(true);
+    }//GEN-LAST:event_b3ActionPerformed
 
-    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+    private void edutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edutActionPerformed
         int rowIndex = student_table.getSelectedRow();
-        login lb = new login();
-
-        Connection conn;
-        String newImage = null;
-
         if (rowIndex < 0) {
             JOptionPane.showMessageDialog(null, "Please Select an Item!");
         } else {
@@ -438,48 +418,26 @@ public class adminDashboard extends javax.swing.JFrame {
                 ResultSet rs = dbc.getData("SELECT * FROM table_student WHERE student_id =" + model.getValueAt(rowIndex, 0));
 
                 if (rs.next()) {
-                    stf.update_id.setText("" + rs.getString("student_id"));
+                    stf.update_id = rs.getString("student_id");
                     stf.fname.setText("" + rs.getString("name"));
                     stf.gmail.setText("" + rs.getString("gmail"));
                     stf.course.setText(rs.getString("student_course"));
                     stf.contact.setText(rs.getString("student_contactnum"));
                     stf.gender = rs.getString("student_gender");
-                    images = rs.getString("image");
-
-                    ImageIcon imageIcon = new ImageIcon(images);
-                    Image icon = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                    ImageIcon in = new ImageIcon(icon);
-
-                    stf.images.setIcon(in);
-                    byte[] buf = new byte[1024];
-
+                    String file_path = rs.getString("image");
+                    int height = 150;
+                    int width = 150;
+                    saveImage.displayImage(stf.display, file_path, height, width);
                     stf.setVisible(true);
-                    this.hide();
-                    stf.ads = ad;
                 }
-
             } catch (SQLException e) {
                 System.out.println("Database Error Connection!");
-
             }
-
         }
-    }//GEN-LAST:event_jToggleButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        DefaultTableModel model = (DefaultTableModel) student_table.getModel();
-        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>(model);
-        student_table.setRowSorter(obj);
-        obj.setRowFilter(javax.swing.RowFilter.regexFilter(search.getText()));
-    }//GEN-LAST:event_jButton4ActionPerformed
-    public static String images;
-    public String ad = "";
+    }//GEN-LAST:event_edutActionPerformed
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         addStudentForm sf = new addStudentForm();
         sf.setVisible(true);
-        sf.nms = uname;
-        this.hide();
-        sf.ads = ad;
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
@@ -500,22 +458,18 @@ public class adminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
     private void student_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_student_tableMouseClicked
-
         int rowIndex = student_table.getSelectedRow();
         if (rowIndex < 0) {
 
         } else {
-
             TableModel model = student_table.getModel();
             addStudentForm st = new addStudentForm();
-            st.id.setText("" + model.getValueAt(rowIndex, 0));
             st.fname.setText("" + model.getValueAt(rowIndex, 1));
             st.gmail.setText("" + model.getValueAt(rowIndex, 2));
             st.course.setText("" + model.getValueAt(rowIndex, 3));
             st.contact.setText("" + model.getValueAt(rowIndex, 4));
-            st.gender = model.getValueAt(rowIndex, 5).toString();
+            addStudentForm.gender = model.getValueAt(rowIndex, 5).toString();
             st.status.setSelectedItem("" + model.getValueAt(rowIndex, 6));
-            st.ads = ad;
         }
     }//GEN-LAST:event_student_tableMouseClicked
 
@@ -535,7 +489,7 @@ public class adminDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_scholarship_tableMouseClicked
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         int rowIndex = scholarship_table.getSelectedRow();
 
         if (rowIndex < 0) {
@@ -549,46 +503,46 @@ public class adminDashboard extends javax.swing.JFrame {
                 dbconnector dbc = new dbconnector();
                 dbc.deleteScholar(Integer.parseInt(id));
                 displayData();
-
             }
-
         }
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_deleteActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         int rowIndex = scholarship_table.getSelectedRow();
-        login lb = new login();
-        adminDashboard ad = new adminDashboard();
-        String email = lb.email;
-        String img = lb.reference;
-        Connection conn;
-        String newImage = null;
         if (rowIndex < 0) {
             JOptionPane.showMessageDialog(null, "Please Select an Item!");
         } else {
-            TableModel model = scholarship_table.getModel();
             updateScholarForm usf = new updateScholarForm();
+            TableModel model = scholarship_table.getModel();
             usf.sc_id.setText("" + model.getValueAt(rowIndex, 0));
             usf.sc_name.setText("" + model.getValueAt(rowIndex, 1));
             usf.sc_type.setText("" + model.getValueAt(rowIndex, 2));
             usf.sc_des.setText("" + model.getValueAt(rowIndex, 3));
             usf.sc_status.setSelectedItem(model.getValueAt(rowIndex, 4).toString());
             usf.setVisible(true);
-            this.hide();
-            usf.ads = ads;
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_editActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         addScholarForm sf = new addScholarForm();
         sf.setVisible(true);
-        this.hide();
-        sf.ads = ads;
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_addActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        searchtable.table(scholarship_table, search1);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
+        searchtable.table(student_table, search);
+    }//GEN-LAST:event_searchKeyReleased
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        searchtable.table(student_table, search);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void search1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search1KeyReleased
+        searchtable.table(scholarship_table, search1);
+    }//GEN-LAST:event_search1KeyReleased
 
     /**
      * @param args the command line arguments
@@ -627,21 +581,26 @@ public class adminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel acc;
-    private javax.swing.JLabel email1;
-    public javax.swing.JLabel image;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton add;
+    private javax.swing.JToggleButton b1;
+    private javax.swing.JToggleButton b2;
+    private javax.swing.JToggleButton b3;
+    public javax.swing.JTextField contact;
+    private javax.swing.JButton delete;
+    private javax.swing.JButton edit;
+    private javax.swing.JToggleButton edut;
+    public javax.swing.JTextField email;
+    private javax.swing.JLabel image;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -651,20 +610,14 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JToggleButton jToggleButton4;
-    private javax.swing.JToggleButton jToggleButton5;
-    private javax.swing.JToggleButton jToggleButton6;
-    public javax.swing.JTextField num;
-    private javax.swing.JLabel position;
     private javax.swing.JTable scholarship_table;
     private javax.swing.JTextField search;
     private javax.swing.JTextField search1;
-    public javax.swing.JTextField studentId;
     private javax.swing.JTable student_table;
     private javax.swing.JTabbedPane tabs;
-    public javax.swing.JTextField user;
+    public javax.swing.JTextField user_id;
+    public javax.swing.JTextField username1;
     // End of variables declaration//GEN-END:variables
 }
