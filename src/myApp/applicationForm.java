@@ -5,7 +5,6 @@
  */
 package myApp;
 
-
 import config.dbconnector;
 import internalPages.report;
 import java.sql.Connection;
@@ -295,7 +294,7 @@ public class applicationForm extends javax.swing.JFrame {
             dbconnector dbc = new dbconnector();
             String sql = "INSERT INTO application_table (student_id, scholarship_id, status) VALUES( ?,?, ?)";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-           
+
             pst.setString(1, (String) idd.getSelectedItem());
             pst.setString(2, scholarID.getText());
             pst.setString(3, status.getText());

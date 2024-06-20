@@ -4,6 +4,25 @@
  */
 package student;
 
+import admin.addStudentForm;
+import config.dbconnector;
+import config.save;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.print.PrinterException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.MessageFormat;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import myApp.printAppForm;
+import net.proteanit.sql.DbUtils;
+
 /**
  *
  * @author MARITIME 02
@@ -13,8 +32,35 @@ public class studentDashboard extends javax.swing.JFrame {
     /**
      * Creates new form dashboard
      */
+    int student_id = save.getID();
+
     public studentDashboard() {
         initComponents();
+        displayData();
+    }
+
+    public void displayData() {
+        try {
+            dbconnector dbc = new dbconnector();
+            String sql = "SELECT table_student.student_id, "
+                    + "table_student.gmail, "
+                    + "table_student.name, "
+                    + "table_student.student_course, "
+                    + "table_scholarship.scholarship_status, "
+                    + "table_scholarship.scholarship_name "
+                    + "FROM application_table "
+                    + "LEFT JOIN table_student ON application_table.student_id = table_student.student_id "
+                    + "LEFT JOIN table_scholarship ON application_table.scholarship_id = table_scholarship.scholarship_id "
+                    + "WHERE table_student.student_id=?";
+            PreparedStatement preparedStatement = dbc.getConnection().prepareStatement(sql);
+            preparedStatement.setInt(1, student_id);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            rep.setModel(DbUtils.resultSetToTableModel(rs));
+
+        } catch (SQLException ex) {
+            System.out.println("Error Message" + ex);
+        }
     }
 
     /**
@@ -31,6 +77,10 @@ public class studentDashboard extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        rep = new javax.swing.JTable();
+        inf = new javax.swing.JButton();
+        print = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -43,15 +93,52 @@ public class studentDashboard extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 700));
 
         jPanel6.setBackground(new java.awt.Color(51, 255, 51));
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 0, 250, 40));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 0, 300, 40));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jTabbedPane1.addTab("tab1", jPanel3);
+
+        rep.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        rep.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                repMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(rep);
+
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 700, 460));
+
+        inf.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        inf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-print-30.png"))); // NOI18N
+        inf.setText("Information");
+        inf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infActionPerformed(evt);
+            }
+        });
+        jPanel3.add(inf, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 141, -1, 30));
+
+        print.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        print.setText("Print table");
+        print.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printActionPerformed(evt);
+            }
+        });
+        jPanel3.add(print, new org.netbeans.lib.awtextra.AbsoluteConstraints(617, 144, 110, 30));
+
+        jTabbedPane1.addTab("dashboard", jPanel3);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jTabbedPane1.addTab("tab2", jPanel4);
+        jTabbedPane1.addTab("apply scholarship", jPanel4);
 
         jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 760, 690));
 
@@ -60,6 +147,77 @@ public class studentDashboard extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void repMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_repMouseClicked
+        int rowIndex = rep.getSelectedRow();
+        if (rowIndex < 0) {
+
+        } else {
+            TableModel model = rep.getModel();
+            addStudentForm st = new addStudentForm();
+            st.fname.setText("" + model.getValueAt(rowIndex, 1));
+            st.gmail.setText("" + model.getValueAt(rowIndex, 2));
+            st.course.setText("" + model.getValueAt(rowIndex, 3));
+            st.contact.setText("" + model.getValueAt(rowIndex, 4));
+            addStudentForm.gender = model.getValueAt(rowIndex, 5).toString();
+            st.status.setSelectedItem("" + model.getValueAt(rowIndex, 6));
+        }
+    }//GEN-LAST:event_repMouseClicked
+
+    private void infActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infActionPerformed
+        printAppForm rp = new printAppForm();
+        int selectedRow = rep.getSelectedRow();
+
+        if (selectedRow != -1) {
+            try {
+                DefaultTableModel model = (DefaultTableModel) rep.getModel();
+                int columnCount = model.getColumnCount();
+                StringBuilder rowData = new StringBuilder();
+
+                String[] columnHeaders = {"\tStudent ID", "\tGmail", "\tName", "\tStudent Course", "\tScholarship Status", "\tScholarship Name"};
+                String[] rowDataValues = new String[columnCount];
+
+                for (int column = 0; column < columnCount; column++) {
+                    rowDataValues[column] = model.getValueAt(selectedRow, column).toString();
+                }
+
+                String header = "\n\tReport Page\n\n";
+
+                String details = "\tApplication Details:\n\n\n";
+                rowData.append(header);
+                rowData.append(details);
+
+                for (int i = 0; i < columnHeaders.length; i++) {
+                    rowData.append(columnHeaders[i]).append(": ").append(rowDataValues[i]).append("\n");
+                    rowData.append("\n");
+                }
+                rp.setVisible(true);
+                rp.print.setText(rowData.toString());
+                rp.print.setAlignmentX(Component.CENTER_ALIGNMENT);
+                rp.print.setAlignmentY(Component.CENTER_ALIGNMENT);
+                Font font = new Font("Tahoma", Font.BOLD, 15);
+
+                // rep.print();
+                JFrame mainFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                mainFrame.dispose();
+                this.dispose();
+            } catch (Exception e) {
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select an Item");
+        }
+    }//GEN-LAST:event_infActionPerformed
+
+    private void printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printActionPerformed
+        MessageFormat header = new MessageFormat("SCHOLAR REPORT");
+        MessageFormat footer = new MessageFormat("Scholarship");
+        try {
+            rep.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (PrinterException e) {
+            JOptionPane.showMessageDialog(null, "Cannot be print!" + e.getMessage());
+        }
+    }//GEN-LAST:event_printActionPerformed
 
     /**
      * @param args the command line arguments
@@ -72,7 +230,7 @@ public class studentDashboard extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -98,11 +256,15 @@ public class studentDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton inf;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton print;
+    private javax.swing.JTable rep;
     // End of variables declaration//GEN-END:variables
 }

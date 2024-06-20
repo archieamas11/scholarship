@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import myApp.login;
+import login.login;
 import myApp.printAppForm;
 import net.proteanit.sql.DbUtils;
 
