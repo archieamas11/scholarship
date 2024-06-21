@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2024 at 10:56 AM
+-- Generation Time: Jun 21, 2024 at 11:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -57,15 +57,16 @@ CREATE TABLE `table_applicants` (
   `student_id` int(50) NOT NULL,
   `scholarship_id` int(50) NOT NULL,
   `grade_picture` varchar(600) NOT NULL,
-  `applicants_status` varchar(50) NOT NULL
+  `applicants_status` varchar(50) NOT NULL,
+  `date_applied` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `table_applicants`
 --
 
-INSERT INTO `table_applicants` (`application_id`, `student_id`, `scholarship_id`, `grade_picture`, `applicants_status`) VALUES
-(35, 60, 36, '2315', 'Pending');
+INSERT INTO `table_applicants` (`application_id`, `student_id`, `scholarship_id`, `grade_picture`, `applicants_status`, `date_applied`) VALUES
+(36, 60, 36, 'src/grades_picture/8.png', 'Accept', '2024-06-22');
 
 -- --------------------------------------------------------
 
@@ -86,7 +87,7 @@ CREATE TABLE `table_scholarship` (
 --
 
 INSERT INTO `table_scholarship` (`scholarship_id`, `scholarship_name`, `scholarship_type`, `scholarship_descrip`, `scholarship_status`) VALUES
-(36, 'UNIFAST', 'Government', 'ssssssssssssssssssss', 'Pending');
+(36, 'UNIFAST', 'Government', 'ssssssssssssssssssss', 'Approved');
 
 -- --------------------------------------------------------
 
@@ -160,7 +161,7 @@ ALTER TABLE `table_admin`
 -- AUTO_INCREMENT for table `table_applicants`
 --
 ALTER TABLE `table_applicants`
-  MODIFY `application_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `application_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `table_scholarship`

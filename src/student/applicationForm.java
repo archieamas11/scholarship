@@ -6,16 +6,18 @@
 package student;
 
 import config.dbconnector;
-import internalPages.report;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.*;
-import java.sql.SQLException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 ;
@@ -34,12 +36,9 @@ public class applicationForm extends javax.swing.JFrame {
 
     public applicationForm() {
         initComponents();
-        loadCombo();
     }
 
     Connection con;
-    public static String name = "";
-    public String ads = "";
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,21 +52,19 @@ public class applicationForm extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         panel = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        lname = new javax.swing.JTextField();
+        sc_sc = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        fname = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        display = new javax.swing.JLabel();
         up = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         display1 = new javax.swing.JLabel();
-        up1 = new javax.swing.JButton();
-        jLabel35 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        sc_des = new javax.swing.JEditorPane();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        sc_type = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -83,20 +80,20 @@ public class applicationForm extends javax.swing.JFrame {
         jLabel15.setText("APPLICATION FORM");
         panel.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 800, 30));
 
-        lname.setEditable(false);
-        lname.setBackground(new java.awt.Color(255, 255, 255));
-        lname.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Last name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
-        panel.add(lname, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, 140, 50));
+        sc_sc.setEditable(false);
+        sc_sc.setBackground(new java.awt.Color(255, 255, 255));
+        sc_sc.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Selected sholarship", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        panel.add(sc_sc, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, 290, 50));
 
         jButton3.setBackground(new java.awt.Color(221, 68, 112));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Save");
+        jButton3.setText("Apply");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-        panel.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 430, 140, 40));
+        panel.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 420, 140, 40));
 
         jButton1.setText("Cancel");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -104,25 +101,7 @@ public class applicationForm extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        panel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 430, 140, 40));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSIT", "BSCRIM", "BSED" }));
-        panel.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 290, 40));
-
-        jLabel1.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel1.setText("2x2 picture *(Required)");
-        panel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 130, -1));
-
-        fname.setEditable(false);
-        fname.setBackground(new java.awt.Color(255, 255, 255));
-        fname.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "First name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
-        panel.add(fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 140, 50));
-
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(display, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 90));
-
-        panel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, 130));
+        panel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 420, 140, 40));
 
         up.setText("Import");
         up.addActionListener(new java.awt.event.ActionListener() {
@@ -130,74 +109,82 @@ public class applicationForm extends javax.swing.JFrame {
                 upActionPerformed(evt);
             }
         });
-        panel.add(up, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 130, 30));
-
-        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel2.setText("Course");
-        panel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 290, -1));
+        panel.add(up, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 130, 40));
 
         jLabel3.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel3.setText("Grades *(Reqruied)");
-        panel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 130, -1));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("or your application will be automatically rejected.");
+        panel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 390, -1));
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel3.add(display1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 90));
+        jPanel3.add(display1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 130));
 
-        panel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, -1, 130));
+        panel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, -1, 130));
 
-        up1.setText("Import");
-        up1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                up1ActionPerformed(evt);
-            }
-        });
-        panel.add(up1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 130, 30));
+        jScrollPane1.setViewportView(sc_des);
+
+        panel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, 290, 130));
+
+        jLabel13.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel13.setText("Scholarship description");
+        panel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, 290, 20));
+
+        jLabel4.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Grades *(Required)");
+        panel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 130, -1));
+
+        jLabel5.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Please input clear and readable grades,");
+        panel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 390, -1));
+
+        sc_type.setEditable(false);
+        sc_type.setBackground(new java.awt.Color(255, 255, 255));
+        sc_type.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Selected type", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        panel.add(sc_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 290, 50));
 
         jPanel1.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 500));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 500));
-
-        jLabel35.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel35.setText("-");
-        getContentPane().add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(203, 12, -1, 20));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, -1));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+String fileName;
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {
-            dbconnector dbc = new dbconnector();
-            String sql = "INSERT INTO application_table (user_id, scholarship_id, status) VALUES( ?,?, ?)";
-            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+        dbconnector dbc = new dbconnector();
+        if (selectedFile == null) {
+            JOptionPane.showMessageDialog(null, "Photo grade required!");
+        } else {
+            fileName = selectedFile.getName();
+            imagePath = "src/grades_picture/" + fileName;
+            String insertSQL = "INSERT INTO table_applicants (student_id, scholarship_id, grade_picture, applicants_status, date_applied) "
+                    + "VALUES (?, ?, ?, 'Pending', NOW())";
 
-            pst.setString(1, (String) idd.getSelectedItem());
-            pst.setString(2, scholarID.getText());
-            pst.setString(3, status.getText());
-
-            pst.execute();
-            report db = new report();
-            db.setVisible(true);
-            this.hide();
-            db.ad = ads;
-        } catch (Exception e) {
-            System.out.println("" + e);
+            try (Connection conn = dbc.getConnection(); PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
+                pstmt.setInt(1, studentID);
+                pstmt.setString(2, sc_id);
+                pstmt.setString(3, imagePath);
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "successfully applied!");
+                this.dispose();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error inserting data: " + e.getMessage());
+            }
         }
-
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
-        fname.setText("");
-        gmail.setText("");
-        course.setText("");
-        contact.setText("");
-        female.setSelected(false);
-        male.setSelected(false);
-        status.setSelectedIndex(0);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        selectedFile = null;
+        sc_des.setText("");
+        sc_sc.setText("");
 
+    }//GEN-LAST:event_jButton1ActionPerformed
+    File selectedFile;
+    String imagePath;
     private void upActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png", "gif");
@@ -213,10 +200,10 @@ public class applicationForm extends javax.swing.JFrame {
 
                 Image resizedImage = originalImage.getScaledInstance(160, 160, Image.SCALE_SMOOTH);
                 ImageIcon icon = new ImageIcon(resizedImage);
-                display.setIcon(icon);
+                display1.setIcon(icon);
 
                 String imageName = selectedFile.getName();
-                imagePath = "src/profile_picture/" + imageName;
+                imagePath = "src/grades_picture/" + imageName;
                 File destination = new File(imagePath);
                 Files.copy(selectedFile.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 // Update the selectedFile to point to the new location
@@ -227,29 +214,6 @@ public class applicationForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_upActionPerformed
-
-    private void up1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_up1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_up1ActionPerformed
-    void loadCombo() {
-
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/scholarshipsystem", "root", "");
-            dbconnector dbc = new dbconnector();
-            ResultSet rs = dbc.getData("SELECT * FROM table_student ");
-            ResultSet rst = dbc.getData("SELECT * FROM table_scholarship ");
-            while (rs.next()) {
-                idd.addItem(rs.getString("student_id"));
-            }
-            while (rst.next()) {
-                scholarshipName.addItem(rst.getString("scholarship_name"));
-//
-            }
-
-        } catch (SQLException e) {
-            System.out.println("" + e);
-        }
-    }
 
     /**
      * @param args the command line arguments
@@ -287,23 +251,21 @@ public class applicationForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel display;
     private javax.swing.JLabel display1;
-    private javax.swing.JTextField fname;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField lname;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel;
+    public javax.swing.JEditorPane sc_des;
+    public javax.swing.JTextField sc_sc;
+    public javax.swing.JTextField sc_type;
     private javax.swing.JButton up;
-    private javax.swing.JButton up1;
     // End of variables declaration//GEN-END:variables
 }

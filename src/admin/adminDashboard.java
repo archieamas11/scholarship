@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
-import login.loginAdmin;
 import login.welcome;
 import net.proteanit.sql.DbUtils;
 
@@ -65,22 +64,22 @@ public final class adminDashboard extends javax.swing.JFrame {
     }
 
     public void displayApplicants() {
+        dbconnector dbc = new dbconnector();
+        String query = "SELECT "
+                + "a.application_id AS `Application #`, "
+                + "CONCAT(st.first_name, ' ', st.last_name) AS `Student name`, "
+                + "sc.scholarship_name AS `Scholarship`, "
+                + "sc.scholarship_type AS `Scholarship type`, "
+                + "a.applicants_status AS `Status` "
+                + "FROM table_applicants a "
+                + "JOIN table_student st ON st.student_id = a.student_id "
+                + "JOIN table_scholarship sc ON sc.scholarship_id = a.scholarship_id;";
 
         try {
-            dbconnector dbc = new dbconnector();
-            ResultSet rs = dbc.getData("SELECT "
-                    + "a.applicantion_id AS `Application #`, "
-                    + "CONCAT(st.first_name, ' ', st.last_name) AS `Student name`, "
-                    + "sc.scholarship_name AS `Scholarship`, "
-                    + "sc.scholarship_type AS `Scholarship type`, "
-                    + "a.applicants_status as `Status` "
-                    + "FROM table_applicants a "
-                    + "JOIN table_student st ON st.student_id = a.student_id "
-                    + "JOIN table_scholarship sc ON sc.scholarship_id = a.scholarship_id;");
+            ResultSet rs = dbc.getData(query);
             applicants_table.setModel(DbUtils.resultSetToTableModel(rs));
-
         } catch (SQLException ex) {
-            System.out.println("Error Message" + ex);
+            System.out.println("Error Message: " + ex.getMessage());
         }
     }
 
@@ -250,6 +249,11 @@ public final class adminDashboard extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("X");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
         jPanel7.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 0, 40, 40));
 
         jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 760, 40));
@@ -684,16 +688,8 @@ public final class adminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    String application_id;
     private void applicants_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applicants_tableMouseClicked
-        int rowIndex = applicants_table.getSelectedRow();
-        if (rowIndex < 0) {
-            JOptionPane.showMessageDialog(null, "Please Select an Item!");
-        } else {
-            updateScholarForm usf = new updateScholarForm();
-            TableModel model = applicants_table.getModel();
-            application_id = model.getValueAt(rowIndex, 0).toString();
-        }
+
     }//GEN-LAST:event_applicants_tableMouseClicked
 
     private void b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b4ActionPerformed
@@ -703,52 +699,70 @@ public final class adminDashboard extends javax.swing.JFrame {
         b2.setSelected(false);
         b3.setSelected(false);
     }//GEN-LAST:event_b4ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int rowIndex = applicants_table.getSelectedRow();
         if (rowIndex < 0) {
             JOptionPane.showMessageDialog(null, "Please Select an Item!");
         } else {
-            updateStudentForm stf = new updateStudentForm();
+            manageApplicants stf = new manageApplicants();
+            stf.applicaion_id = applicants_table.getValueAt(rowIndex, 0).toString();
 
             try {
                 dbconnector dbc = new dbconnector();
-                ResultSet rs = dbc.getData("SELECT "
+                String query = "SELECT st.student_id, st.first_name, st.last_name, st.email, st.gender, st.dob, "
+                        + "st.address, st.phone_number, st.program, st.year_level, st.image, "
+                        + "a.grade_picture, "
                         + "CONCAT(st.first_name, ' ', st.last_name) AS `Student name`, "
-                        + "sc.scholarship_name AS `Scholarship`, "
-                        + "sc.scholarship_type AS `Scholarship type`, "
-                        + "a.applicants_status as `Status` "
+                        + "sc.scholarship_name, sc.scholarship_type, "
+                        + "a.applicants_status "
                         + "FROM table_applicants a "
                         + "JOIN table_student st ON st.student_id = a.student_id "
                         + "JOIN table_scholarship sc ON sc.scholarship_id = a.scholarship_id "
-                        + "WHERE a.application_id = ?," + application_id);
+                        + "WHERE a.application_id = ?";
+
+                PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
+                pstmt.setString(1, stf.applicaion_id);
+                ResultSet rs = pstmt.executeQuery();
 
                 if (rs.next()) {
-                    stf.update_id = rs.getString("student_id");
-                    stf.fname.setText("" + rs.getString("first_name"));
-                    stf.lname.setText("" + rs.getString("last_name"));
-                    stf.email.setText("" + rs.getString("email"));
-                    stf.gends.setSelectedItem("" + rs.getString("gender"));
+                    stf.applied.setText(rs.getString("scholarship_name"));
+                    stf.type.setText(rs.getString("scholarship_type"));
+                    stf.fname.setText(rs.getString("first_name"));
+                    stf.lname.setText(rs.getString("last_name"));
+                    stf.email.setText(rs.getString("email"));
+                    stf.gends.setSelectedItem(rs.getString("gender"));
                     java.sql.Date sqlDate = rs.getDate("dob");
                     if (sqlDate != null) {
                         java.util.Date utilDate = new java.util.Date(sqlDate.getTime());
                         stf.dob.setDate(utilDate);
                     }
-                    stf.address.setText("" + rs.getString("address"));
+                    stf.status.setSelectedItem(rs.getString("applicants_status"));
+                    stf.address.setText(rs.getString("address"));
                     stf.number.setText(rs.getString("phone_number"));
-                    stf.program.setSelectedItem("" + rs.getString("program"));
-                    stf.year.setSelectedItem("" + rs.getString("year_level"));
+                    stf.program.setSelectedItem(rs.getString("program"));
+                    stf.year.setSelectedItem(rs.getString("year_level"));
+
                     String file_path = rs.getString("image");
                     int height = 150;
                     int width = 150;
                     saveImage.displayImage(stf.display, file_path, height, width);
+
+                    String gradeFilePath = rs.getString("grade_picture");
+                    saveImage.displayImage(stf.grade, gradeFilePath, height, width);
+
                     stf.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No data found for the selected applicant.");
                 }
             } catch (SQLException e) {
-                System.out.println("Database Error Connection!");
+                JOptionPane.showMessageDialog(null, "Database Error: " + e.getMessage());
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jLabel10MouseClicked
 
     /**
      * @param args the command line arguments

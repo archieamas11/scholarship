@@ -41,11 +41,8 @@ public class printAppForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         print = new javax.swing.JTextArea();
-        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -55,34 +52,12 @@ public class printAppForm extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setLayout(null);
 
-        jLabel7.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        jLabel7.setText("-");
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(540, 10, 20, 30);
-
-        jLabel34.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel34.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-close-30.png"))); // NOI18N
-        jLabel34.setText(" x");
-        jLabel34.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel34MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel34);
-        jLabel34.setBounds(560, 10, 30, 30);
-
         print.setColumns(20);
         print.setRows(5);
         jScrollPane1.setViewportView(print);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(20, 20, 390, 420);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/scclogo.png"))); // NOI18N
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(400, 150, 290, 371);
+        jScrollPane1.setBounds(20, 20, 530, 420);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-print-30.png"))); // NOI18N
@@ -100,17 +75,6 @@ public class printAppForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabel34MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel34MouseClicked
-//
-        dashBoard db = new dashBoard();
-        db.setVisible(true);
-        //  db.name = name;
-        db.nam = ads;
-        this.hide();
-
-
-    }//GEN-LAST:event_jLabel34MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         PrinterJob job = PrinterJob.getPrinterJob();
@@ -183,9 +147,6 @@ public class printAppForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTextArea print;
