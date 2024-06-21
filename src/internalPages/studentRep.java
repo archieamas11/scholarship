@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import login.login;
+import login.loginAdmin;
 import myApp.printAppForm;
 import net.proteanit.sql.DbUtils;
 
@@ -198,7 +198,7 @@ public class studentRep extends javax.swing.JInternalFrame {
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
         JFrame mainJFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         mainJFrame.dispose();
-        login lb = new login();
+        loginAdmin lb = new loginAdmin();
         lb.setVisible(true);
         this.hide();
     }//GEN-LAST:event_jLabel12MouseClicked

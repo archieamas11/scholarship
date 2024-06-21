@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import login.login;
+import login.loginAdmin;
 import myApp.login;
 import myApp.userPage;
 
@@ -210,7 +210,7 @@ public class dashBoardPage extends javax.swing.JInternalFrame {
 
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
 
-        login lb = new login();
+        loginAdmin lb = new loginAdmin();
         adminDashboard ad = new adminDashboard();
         String email = lb.email;
         Connection conn = null;

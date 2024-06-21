@@ -17,6 +17,7 @@ public class updateScholarForm extends javax.swing.JFrame {
     /**
      * Creates new form updateScholarForm
      */
+    public String yawa;
 
     public updateScholarForm() {
         initComponents();
@@ -35,16 +36,18 @@ public class updateScholarForm extends javax.swing.JFrame {
         jPanel21 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         save = new javax.swing.JButton();
-        sc_id = new javax.swing.JTextField();
-        sc_type = new javax.swing.JTextField();
-        sc_name = new javax.swing.JTextField();
         sc_status = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         sc_des = new javax.swing.JEditorPane();
-        jLabel1 = new javax.swing.JLabel();
+        sc_name = new javax.swing.JComboBox<>();
+        sc_type = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel34.setBackground(new java.awt.Color(102, 102, 255));
@@ -59,7 +62,7 @@ public class updateScholarForm extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("UPDATE SCHOLARSHIP FORM");
-        jPanel21.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 500, 30));
+        jPanel21.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 500, 30));
 
         save.setBackground(new java.awt.Color(221, 68, 112));
         save.setForeground(new java.awt.Color(255, 255, 255));
@@ -70,27 +73,10 @@ public class updateScholarForm extends javax.swing.JFrame {
                 saveActionPerformed(evt);
             }
         });
-        jPanel21.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, -1, 30));
+        jPanel21.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 390, -1, 30));
 
-        sc_id.setEditable(false);
-        sc_id.setBackground(new java.awt.Color(255, 255, 255));
-        sc_id.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Scholarship ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
-        jPanel21.add(sc_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 270, 40));
-
-        sc_type.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Scholarship type", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
-        sc_type.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sc_typeActionPerformed(evt);
-            }
-        });
-        jPanel21.add(sc_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 139, 270, 40));
-
-        sc_name.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Scholarship name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
-        jPanel21.add(sc_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 270, 40));
-
-        sc_status.setForeground(new java.awt.Color(0, 0, 0));
         sc_status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Approved", "Declined", "Pending" }));
-        jPanel21.add(sc_status, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 270, 40));
+        jPanel21.add(sc_status, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 270, 40));
 
         jButton1.setText("Cancel");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -98,23 +84,34 @@ public class updateScholarForm extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel21.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, 70, 30));
+        jPanel21.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 390, 70, 30));
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Scholarship description", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Scholarship description"));
 
         sc_des.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane2.setViewportView(sc_des);
 
-        jPanel21.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 270, 90));
+        jPanel21.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 270, 90));
 
-        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel1.setText("Status");
-        jPanel21.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 270, -1));
+        sc_name.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CHED\t", "UNIFAST", "WORKING" }));
+        jPanel21.add(sc_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 270, 40));
+
+        sc_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Academic", "Government" }));
+        jPanel21.add(sc_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 270, 40));
+
+        jLabel10.setText("Scholarship name");
+        jPanel21.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 130, 33));
+
+        jLabel11.setText("Status");
+        jPanel21.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 130, 33));
+
+        jLabel12.setText("Scholarship type");
+        jPanel21.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 130, 33));
 
         jPanel34.add(jPanel21);
-        jPanel21.setBounds(0, 0, 500, 400);
+        jPanel21.setBounds(0, 0, 500, 450);
 
-        getContentPane().add(jPanel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 400));
+        getContentPane().add(jPanel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 450));
 
         pack();
         setLocationRelativeTo(null);
@@ -124,11 +121,11 @@ public class updateScholarForm extends javax.swing.JFrame {
         dbconnector dbc = new dbconnector();
 
         int num = dbc.updateData("UPDATE table_scholarship "
-                + "SET scholarship_name = '" + sc_name.getText() + "',"
-                + "scholarship_type='" + sc_type.getText() + "',"
+                + "SET scholarship_name = '" + sc_name.getSelectedItem() + "',"
+                + "scholarship_type='" + sc_type.getSelectedItem() + "',"
                 + "scholarship_descrip = '" + sc_des.getText() + "', "
                 + "scholarship_status='" + sc_status.getSelectedItem() + "'"
-                + "WHERE scholarship_id = '" + sc_id.getText() + "'");
+                + "WHERE scholarship_id = '" + yawa + "'");
         if (num == 0) {
 
         } else {
@@ -139,10 +136,6 @@ public class updateScholarForm extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_saveActionPerformed
-
-    private void sc_typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sc_typeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sc_typeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
@@ -185,16 +178,17 @@ public class updateScholarForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel34;
     public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JButton save;
     public javax.swing.JEditorPane sc_des;
-    public javax.swing.JTextField sc_id;
-    public javax.swing.JTextField sc_name;
+    public javax.swing.JComboBox<String> sc_name;
     public javax.swing.JComboBox<String> sc_status;
-    public javax.swing.JTextField sc_type;
+    public javax.swing.JComboBox<String> sc_type;
     // End of variables declaration//GEN-END:variables
 }

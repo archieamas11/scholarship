@@ -60,7 +60,7 @@ public class addScholarForm extends javax.swing.JFrame {
         jLabel10.setText("Scholarship type");
         jPanel34.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 130, 33));
 
-        scholarType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Academic", "Government", " " }));
+        scholarType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Academic", "Government" }));
         jPanel34.add(scholarType, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 270, 40));
 
         jButton3.setBackground(new java.awt.Color(221, 68, 112));
@@ -172,8 +172,6 @@ public class addScholarForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel10;

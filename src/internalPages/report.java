@@ -23,7 +23,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import myApp.applicationForm;
+import student.applicationForm;
 import myApp.dashBoard;
 import myApp.editReports;
 import myApp.login;

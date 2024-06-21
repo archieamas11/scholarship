@@ -6,7 +6,6 @@
 package login;
 
 import admin.adminDashboard;
-import myApp.*;
 import config.dbconnector;
 import config.save;
 import java.sql.PreparedStatement;
@@ -14,32 +13,30 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import org.mindrot.jbcrypt.BCrypt;
-import student.studentDashboard;
 
 /**
  *
  * @author Hariell
  */
-public class login extends javax.swing.JFrame {
+public class loginAdmin extends javax.swing.JFrame {
 
-    public static int account_id;
+    public static int admin_id;
 
-    public login() {
+    public loginAdmin() {
         initComponents();
 
     }
 
-    public static boolean loginAccount(String user, String pass, String role) {
+    public static boolean checkAdmin(String user, String pass) {
         try {
             dbconnector connector = new dbconnector();
-            String query = "SELECT user_id, password FROM user_table WHERE email = ? AND role = ?";
+            String query = "SELECT user_id, password FROM table_admin WHERE username = ?";
             PreparedStatement statement = connector.getConnection().prepareStatement(query);
             statement.setString(1, user);
-            statement.setString(2, role);
 
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                account_id = rs.getInt("user_id");
+                admin_id = rs.getInt("user_id");
                 String hash = rs.getString("password");
                 if (BCrypt.checkpw(pass, hash)) {
                     return true;
@@ -72,6 +69,7 @@ public class login extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -155,6 +153,14 @@ public class login extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/books_icon.png"))); // NOI18N
         jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1000, -1));
 
+        jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 10, 100, 40));
+
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
@@ -175,45 +181,26 @@ public class login extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_logPassKeyPressed
-    private String checkLogin(String user, String pass) {
-        if (loginAccount(user, pass, "student")) {
-            return "student";
-        } else if (loginAccount(user, pass, "admin")) {
-            return "admin";
-        }
-        return null;
-    }
+
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         String username = logUser.getText();
         String password = logPass.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please Input the Right Info!");
+            JOptionPane.showMessageDialog(null, "Please input all fields!");
+            return;
+        }
+
+        if (checkAdmin(username, password)) {
+            JOptionPane.showMessageDialog(null, "Successfully login!");
+            save.setID(admin_id);
+            adminDashboard db = new adminDashboard();
+            db.setVisible(true);
+            this.dispose();
+
         } else {
-            String loginType = checkLogin(username, password);
-
-            if (loginType != null) {
-                JOptionPane.showMessageDialog(null, "Successfully login!");
-                save.setID(account_id);
-
-                switch (loginType) {
-                    case "student":
-                        studentDashboard a = new studentDashboard();
-                        a.setVisible(true);
-                        this.hide();
-                        break;
-                    case "admin":
-                        adminDashboard db = new adminDashboard();
-                        db.setVisible(true);
-                        this.hide();
-                        break;
-
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Failed login!");
-                logPass.setText("");
-            }
+            JOptionPane.showMessageDialog(null, "Wrong username or password!");
         }
     }//GEN-LAST:event_loginActionPerformed
 
@@ -230,6 +217,14 @@ public class login extends javax.swing.JFrame {
         rf.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        welcome yawa = new welcome();
+        yawa.setVisible(true);
+        this.dispose();
+        logPass.setText("");
+        logUser.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,21 +244,25 @@ public class login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(login.class
+            java.util.logging.Logger.getLogger(loginAdmin.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(login.class
+            java.util.logging.Logger.getLogger(loginAdmin.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(login.class
+            java.util.logging.Logger.getLogger(loginAdmin.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(login.class
+            java.util.logging.Logger.getLogger(loginAdmin.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -272,13 +271,14 @@ public class login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new login().setVisible(true);
+                new loginAdmin().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CheckBox;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

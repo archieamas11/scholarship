@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -35,7 +36,6 @@ public class addStudentForm extends javax.swing.JFrame {
     public addStudentForm() {
         initComponents();
     }
-    public static String gender;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,22 +47,26 @@ public class addStudentForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel34 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
+        save = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        fname = new javax.swing.JTextField();
-        gmail = new javax.swing.JTextField();
-        contact = new javax.swing.JTextField();
-        course = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        status = new javax.swing.JComboBox<>();
-        jLabel10 = new javax.swing.JLabel();
-        male = new javax.swing.JRadioButton();
-        female = new javax.swing.JRadioButton();
+        lname = new javax.swing.JTextField();
+        address = new javax.swing.JTextField();
+        number = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         up = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         display = new javax.swing.JLabel();
+        fname = new javax.swing.JTextField();
+        dob = new com.toedter.calendar.JDateChooser();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        email = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        program = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        gends = new javax.swing.JComboBox<>();
+        year = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -72,18 +76,18 @@ public class addStudentForm extends javax.swing.JFrame {
         jPanel34.setPreferredSize(new java.awt.Dimension(543, 594));
         jPanel34.setLayout(null);
 
-        jButton4.setBackground(new java.awt.Color(221, 68, 112));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Save");
-        jButton4.setBorderPainted(false);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        save.setBackground(new java.awt.Color(221, 68, 112));
+        save.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        save.setForeground(new java.awt.Color(255, 255, 255));
+        save.setText("Save");
+        save.setBorderPainted(false);
+        save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                saveActionPerformed(evt);
             }
         });
-        jPanel34.add(jButton4);
-        jButton4.setBounds(360, 420, 140, 40);
+        jPanel34.add(save);
+        save.setBounds(330, 460, 140, 40);
 
         jButton1.setText("Cancel");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -92,61 +96,19 @@ public class addStudentForm extends javax.swing.JFrame {
             }
         });
         jPanel34.add(jButton1);
-        jButton1.setBounds(210, 420, 140, 40);
+        jButton1.setBounds(180, 460, 140, 40);
 
-        fname.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
-        jPanel34.add(fname);
-        fname.setBounds(210, 90, 290, 50);
+        lname.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Last name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel34.add(lname);
+        lname.setBounds(330, 90, 140, 50);
 
-        gmail.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gmail", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
-        jPanel34.add(gmail);
-        gmail.setBounds(210, 140, 290, 50);
+        address.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Address", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel34.add(address);
+        address.setBounds(180, 300, 290, 50);
 
-        contact.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contact number", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
-        jPanel34.add(contact);
-        contact.setBounds(210, 190, 290, 50);
-
-        course.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Course", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
-        jPanel34.add(course);
-        course.setBounds(210, 240, 290, 50);
-
-        jLabel9.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel9.setText("Status");
-        jPanel34.add(jLabel9);
-        jLabel9.setBounds(210, 290, 290, 20);
-
-        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Single\t", "Married", "Widowed", " " }));
-        status.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                statusActionPerformed(evt);
-            }
-        });
-        jPanel34.add(status);
-        status.setBounds(210, 310, 290, 40);
-
-        jLabel10.setText(" Gender");
-        jPanel34.add(jLabel10);
-        jLabel10.setBounds(210, 360, 41, 40);
-
-        male.setBackground(new java.awt.Color(255, 255, 255));
-        male.setText("  Male");
-        male.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maleActionPerformed(evt);
-            }
-        });
-        jPanel34.add(male);
-        male.setBounds(270, 370, 57, 21);
-
-        female.setBackground(new java.awt.Color(255, 255, 255));
-        female.setText(" Female");
-        female.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                femaleActionPerformed(evt);
-            }
-        });
-        jPanel34.add(female);
-        female.setBounds(360, 370, 66, 21);
+        number.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contact number", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel34.add(number);
+        number.setBounds(180, 250, 290, 50);
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -161,84 +123,153 @@ public class addStudentForm extends javax.swing.JFrame {
             }
         });
         jPanel34.add(up);
-        up.setBounds(560, 260, 150, 40);
+        up.setBounds(570, 300, 150, 40);
 
         jLabel8.setForeground(new java.awt.Color(153, 153, 153));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("* Optional");
+        jLabel8.setText("2x2 profile picture");
         jPanel34.add(jLabel8);
-        jLabel8.setBounds(560, 310, 150, 20);
+        jLabel8.setBounds(570, 110, 150, 20);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(display, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 150));
 
         jPanel34.add(jPanel1);
-        jPanel1.setBounds(560, 100, 150, 150);
+        jPanel1.setBounds(570, 140, 150, 150);
 
-        getContentPane().add(jPanel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 500));
+        fname.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "First name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel34.add(fname);
+        fname.setBounds(180, 90, 140, 50);
+
+        dob.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel34.add(dob);
+        dob.setBounds(180, 160, 140, 40);
+
+        jLabel11.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel11.setText("Gender");
+        jPanel34.add(jLabel11);
+        jLabel11.setBounds(330, 140, 140, 20);
+
+        jLabel13.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel13.setText("Date of birth");
+        jPanel34.add(jLabel13);
+        jLabel13.setBounds(180, 140, 140, 20);
+
+        email.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Email", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel34.add(email);
+        email.setBounds(180, 200, 290, 50);
+
+        jLabel14.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel14.setText("Program");
+        jPanel34.add(jLabel14);
+        jLabel14.setBounds(180, 350, 140, 20);
+
+        program.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSIT", "BSCRIM", "BSTM", "BSED" }));
+        program.setOpaque(true);
+        program.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                programActionPerformed(evt);
+            }
+        });
+        jPanel34.add(program);
+        program.setBounds(180, 370, 140, 40);
+
+        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel15.setText("Year level");
+        jPanel34.add(jLabel15);
+        jLabel15.setBounds(330, 350, 140, 20);
+
+        gends.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Other" }));
+        gends.setOpaque(true);
+        gends.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gendsActionPerformed(evt);
+            }
+        });
+        jPanel34.add(gends);
+        gends.setBounds(330, 160, 140, 40);
+
+        year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st year", "2nd year", "3rd year", "4th year" }));
+        year.setOpaque(true);
+        year.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearActionPerformed(evt);
+            }
+        });
+        jPanel34.add(year);
+        year.setBounds(330, 370, 140, 40);
+
+        getContentPane().add(jPanel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 560));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/scholarshipsystem", "root", "");
-            String sql = "INSERT INTO table_student (name,gmail,student_course, student_contactnum,student_gender,image,student_status) VALUES (?,?,?,?,?,?,?)";
-            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        if (fname.getText().isEmpty()
+                || lname.getText().isEmpty()
+                || email.getText().isEmpty()
+                || gends.getSelectedItem() == null
+                || dob.getDate() == null
+                || address.getText().isEmpty()
+                || number.getText().isEmpty()
+                || program.getSelectedItem() == null
+                || year.getSelectedItem() == null
+                || selectedFile == null) {
 
-            if (selectedFile != null) {
-                fileName = selectedFile.getName();
-                imagePath = "src/profile_picture/" + fileName;
-            } else {
-                String defaultImage = "src/profile_picture/default_profile.png";
-                imagePath = defaultImage;
-            }
+            JOptionPane.showMessageDialog(null, "All fields including profile picture are required!");
+            return;
+        }
+
+        fileName = selectedFile.getName();
+        imagePath = "src/profile_picture/" + fileName;
+
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/scholarshipsystem", "root", ""); PreparedStatement pst = con.prepareStatement("INSERT INTO table_student (first_name, last_name, email, gender, dob, address, phone_number, program, year_level, image, status) VALUES (?,?,?,?,?,?,?,?,?,?,?)")) {
+
             pst.setString(1, fname.getText());
-            pst.setString(2, gmail.getText());
-            pst.setString(3, course.getText());
-            pst.setString(4, contact.getText());
-            pst.setString(5, gender);
-            pst.setString(6, imagePath);
-            pst.setString(7, status.getSelectedItem().toString());
-            JOptionPane.showMessageDialog(null, "Successfully Save!");
-            pst.execute();
+            pst.setString(2, lname.getText());
+            pst.setString(3, email.getText());
+            pst.setString(4, gends.getSelectedItem().toString());
+            java.util.Date utilDate = dob.getDate();
+            if (utilDate == null) {
+                JOptionPane.showMessageDialog(null, "Date of birth is required!");
+                return;
+            }
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            pst.setDate(5, sqlDate);
+            pst.setString(6, address.getText());
+            pst.setString(7, number.getText());
+            pst.setString(8, program.getSelectedItem().toString());
+            pst.setString(9, year.getSelectedItem().toString());
+            pst.setString(10, imagePath);
+            pst.setString(11, "Active");
+
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Successfully Saved!");
+
             adminDashboard db = new adminDashboard();
             db.setVisible(true);
             this.dispose();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "An error occurred while saving the data.");
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_saveActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
         fname.setText("");
-        gmail.setText("");
-        course.setText("");
-        contact.setText("");
-        female.setSelected(false);
-        male.setSelected(false);
-        status.setSelectedIndex(0);
+        lname.setText("");
+        email.setText("");
+        gends.setSelectedIndex(-1);
+        dob.setDate(null);
+        address.setText("");
+        number.setText("");
+        program.setSelectedIndex(-1);
+        year.setSelectedIndex(-1);
+        selectedFile = null;
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_statusActionPerformed
-
-    private void maleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleActionPerformed
-        if (male.isSelected()) {
-            female.setSelected(false);
-            gender = "Male";
-        }
-    }//GEN-LAST:event_maleActionPerformed
-
-    private void femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleActionPerformed
-        if (female.isSelected()) {
-            male.setSelected(false);
-            gender = "Female";
-        }
-    }//GEN-LAST:event_femaleActionPerformed
     String imagePath;
     private void upActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upActionPerformed
         JFileChooser fileChooser = new JFileChooser();
@@ -270,6 +301,18 @@ public class addStudentForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_upActionPerformed
 
+    private void programActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_programActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_programActionPerformed
+
+    private void gendsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gendsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gendsActionPerformed
+
+    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_yearActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -281,7 +324,7 @@ public class addStudentForm extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -307,22 +350,26 @@ public class addStudentForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTextField contact;
-    public javax.swing.JTextField course;
+    public javax.swing.JTextField address;
     private javax.swing.JLabel display;
-    public javax.swing.JRadioButton female;
+    private com.toedter.calendar.JDateChooser dob;
+    public javax.swing.JTextField email;
     public javax.swing.JTextField fname;
-    public javax.swing.JTextField gmail;
+    public javax.swing.JComboBox<String> gends;
     private javax.swing.JButton jButton1;
-    public javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel34;
-    public javax.swing.JRadioButton male;
-    public javax.swing.JComboBox<String> status;
+    public javax.swing.JTextField lname;
+    public javax.swing.JTextField number;
+    public javax.swing.JComboBox<String> program;
+    public javax.swing.JButton save;
     private javax.swing.JButton up;
+    public javax.swing.JComboBox<String> year;
     // End of variables declaration//GEN-END:variables
 }
